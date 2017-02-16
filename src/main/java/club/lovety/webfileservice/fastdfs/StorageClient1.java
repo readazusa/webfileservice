@@ -8,7 +8,10 @@
 
 package club.lovety.webfileservice.fastdfs;
 
-import org.csource.common.*;
+
+
+import club.lovety.webfileservice.common.MyException;
+import club.lovety.webfileservice.common.NameValuePair;
 
 import java.io.IOException;
 
