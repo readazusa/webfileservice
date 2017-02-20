@@ -1,5 +1,6 @@
 package club.lovety.webfileservice.api;
 
+import club.lovety.webfileservice.common.UploadFdfsUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,10 +16,16 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("api")
 public class ApiController {
 
-
     @RequestMapping("upload")
     public Object upload(HttpServletRequest request) {
-        return null;
+        UploadFdfsUtils uploadFdfsUtils = null;
+        try {
+            uploadFdfsUtils = UploadFdfsUtils.getInstance().init();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        uploadFdfsUtils.upload("123".getBytes());
+        return "success";
     }
 
     @RequestMapping("del")

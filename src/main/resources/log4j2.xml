@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="error">
+    <Appenders>
+        <Console name="Console">
+            <PatternLayout pattern="%highlight{%d{yyyy-MM-dd HH:mm:ss.SSS} %C.%M [%t] %-5level %logger{360} - %m%n}"/>
+        </Console>
+        <File name="File" fileName="/file/webfileservice/webfileservice.log">
+            <PatternLayout>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %C.%M [%t] %-5level %logger{360} - %m%n</pattern>
+            </PatternLayout>
+        </File>
+        <File name="FileTest" fileName="/file/webfileservice/test/webfileservice.log">
+            <PatternLayout>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %m%n</pattern>
+            </PatternLayout>
+        </File>
+
+        <RollingFile name="RollingFile" fileName="/file/webfileservice/app1.log" filePattern="/file/webfileservice/app1-%d{yyyyMMddHHmmssSS}.log.gz"
+                     ignoreExceptions="true">
+            <PatternLayout>
+                <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+            </PatternLayout>
+            <SizeBasedTriggeringPolicy size="50K" />   <!--当数据大于100KB时压缩-->
+        </RollingFile>
+
+    </Appenders>
+    <Loggers>
+        <Root level="DEBUG">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="File"></AppenderRef>
+        </Root>
+
+    </Loggers>
+</Configuration>

@@ -5,7 +5,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
-import java.io.IOException;
 
 /**
  * Created by 念梓  on 2017/2/17.
@@ -13,7 +12,7 @@ import java.io.IOException;
  * author: 念梓
  * des:上传fastdfs文件系统的工具类
  */
-public final class UploadFdfsUtils {
+public  class UploadFdfsUtils {
 
     private static final Logger log = LogManager.getLogger(UploadFdfsUtils.class);
 
@@ -23,18 +22,19 @@ public final class UploadFdfsUtils {
     /**
      * 默认的fastdfs配置文件
      */
-    private static String CONF_FILE_PATH = "fdfs_clinet.properties";
+    private static String CONF_FILE_PATH = "classes/fdfs_clinet.properties";
 
     private UploadFdfsUtils() {
+
+    }
+
+    public static UploadFdfsUtils getInstance() {
         synchronized (UploadFdfsUtils.class) {
             if (null == uploadFdfsUtils) {
                 uploadFdfsUtils = new UploadFdfsUtils();
             }
         }
-    }
-
-    public static UploadFdfsUtils getInstance() {
-        return new UploadFdfsUtils();
+        return uploadFdfsUtils;
     }
 
     public UploadFdfsUtils init() throws Exception {
@@ -42,16 +42,14 @@ public final class UploadFdfsUtils {
     }
 
     public UploadFdfsUtils init(String confFilePath) throws Exception {
-        String filePath =UploadFdfsUtils.class.getClassLoader().getResource(confFilePath).getFile();
-        ClientGlobal.init(filePath);
+//        String filePath =UploadFdfsUtils.class.getClassLoader().getResource(confFilePath).getFile();
+        ClientGlobal.init(confFilePath);
         log.debug("===================初始化fastdfs上传组件成功==================");
         return uploadFdfsUtils;
     }
 
 
     public String upload(File file) {
-
-
         return null;
     }
 
@@ -73,13 +71,19 @@ public final class UploadFdfsUtils {
     }
 
 
-    public static void main(String[] args) {
-        System.out.println(UploadFdfsUtils.class.getClassLoader().getResource(CONF_FILE_PATH).toString());
-        String f = UploadFdfsUtils.class.getClassLoader().getResource(CONF_FILE_PATH).getFile();
-        try {
-            ClientGlobal.init(f);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    public static void main(String[] args) {
+//        System.out.println(UploadFdfsUtils.class.getClassLoader().getResource(CONF_FILE_PATH).toString());
+//        String f = UploadFdfsUtils.class.getClassLoader().getResource(CONF_FILE_PATH).getFile();
+//        try {
+//            ClientGlobal.init(f);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        try {
+//            UploadFdfsUtils uploadFdfsUtils =UploadFdfsUtils.getInstance().init();
+//            uploadFdfsUtils.upload("123".getBytes());
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 }
