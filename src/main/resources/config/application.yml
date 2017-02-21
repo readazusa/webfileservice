@@ -1,4 +1,7 @@
 server:
   port: 80
   contextPath: /webfileservice
-
+spring:
+  http:
+    multipart:
+      max-file-size: 100KB

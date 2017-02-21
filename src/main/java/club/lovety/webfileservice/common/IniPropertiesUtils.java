@@ -4,6 +4,7 @@ package club.lovety.webfileservice.common;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.Hashtable;
 import java.util.Properties;
 
@@ -27,8 +28,8 @@ public final class IniPropertiesUtils {
         assertNotBank(confFile, "配置文件不能为空");
         if (hashtable.isEmpty()) {
             Properties properties = new Properties();
-            FileInputStream fileInputStream = new FileInputStream(confFile);
-            properties.load(fileInputStream);
+            InputStream inputStream = IniPropertiesUtils.class.getClassLoader().getResourceAsStream(confFile);
+            properties.load(inputStream);
             setIntValue(properties, AppConstant.FDFS_CONNECT_TIMEOUT_KEY);
             setIntValue(properties, AppConstant.FDFS_NETWORK_TIMEOUT_KEY);
             setValue(properties, AppConstant.FDFS_CHARSET_KEY);
