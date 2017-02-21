@@ -1,7 +1,6 @@
 package club.lovety.webfileservice;
 
 
-import com.asprise.ocr.Ocr;
 
 import java.io.File;
 

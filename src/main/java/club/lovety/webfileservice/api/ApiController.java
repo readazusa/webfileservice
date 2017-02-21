@@ -1,8 +1,14 @@
 package club.lovety.webfileservice.api;
 
+import club.lovety.webfileservice.common.Result;
 import club.lovety.webfileservice.common.UploadFdfsUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,16 +22,22 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("api")
 public class ApiController {
 
-    @RequestMapping("upload")
+    private static final Logger log = LogManager.getLogger(ApiController.class);
+
+    private static final String UPLOAD_FILE_NAME = "filename";
+
+    @RequestMapping(value = "upload",method = RequestMethod.POST)
     public Object upload(HttpServletRequest request) {
-        UploadFdfsUtils uploadFdfsUtils = null;
+        Result result = new Result();
         try {
-            uploadFdfsUtils = UploadFdfsUtils.getInstance().init();
-        } catch (Exception e) {
-            e.printStackTrace();
+            String uploadPath = uploadToFdfs(request);
+            result.setObj(uploadPath);
+        } catch (Exception ex) {
+             log.error("上传失败: ",ex);
+            result.setCode("00001");
+            result.setMsg(ex.getMessage());
         }
-        uploadFdfsUtils.upload("123".getBytes());
-        return "success";
+        return result;
     }
 
     @RequestMapping("del")
@@ -37,5 +49,19 @@ public class ApiController {
         return null;
     }
 
+
+    private String uploadToFdfs(HttpServletRequest request) throws Exception {
+        MultipartHttpServletRequest   multipartRequest = (MultipartHttpServletRequest) request;
+        MultipartFile multipartFile = multipartRequest.getFile(UPLOAD_FILE_NAME);
+        String suffixName = getFileSuffixName(multipartFile.getOriginalFilename());
+        byte[] fileBytes = multipartFile.getBytes();
+        UploadFdfsUtils uploadFdfsUtils = UploadFdfsUtils.getInstance().init();
+        return uploadFdfsUtils.upload(fileBytes,suffixName);
+    }
+
+    private String getFileSuffixName(String fileName){
+        int lastIndex = fileName.lastIndexOf(".");
+        return fileName.substring(lastIndex+1);
+    }
 
 }
