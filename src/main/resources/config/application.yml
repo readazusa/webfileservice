@@ -1,7 +1,13 @@
 server:
-  port: 80
+  port: 5000
   contextPath: /webfileservice
+
+# max-file-size:单个文件上传的最大数
+# max-request-size :总共文件的大小
 spring:
   http:
     multipart:
-      max-file-size: 100KB
+      max-file-size: 2MB
+fdfs:
+  url: http://1551sp9557.imwork.net:7000/
+

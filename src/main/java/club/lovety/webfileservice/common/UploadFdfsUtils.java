@@ -63,8 +63,10 @@ public class UploadFdfsUtils {
         StorageClient client = new StorageClient(trackerServer, storageServer);
         String[] results = client.upload_appender_file(bytes, suffix, null);
         log.debug("====上传文件到文件中心成功,storename: {},newfilename:  {}", results[0], results[1]);
-        uploadResultUrl = results[1];
-        return uploadResultUrl;
+        StringBuffer sb = new StringBuffer();
+        sb.append(results[0]).append("/").append(results[1]);
+//        uploadResultUrl = results[1];
+        return sb.toString();
     }
 
 

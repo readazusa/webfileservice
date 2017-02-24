@@ -12,7 +12,7 @@ public class Result {
 
     private String code = "00000";
 
-    private Object obj;
+    private Object data;
 
     public Result() {
 
@@ -26,7 +26,7 @@ public class Result {
     public Result(String msg, String code, Object obj) {
         this.code = code;
         this.msg = msg;
-        this.obj = obj;
+        this.data = obj;
     }
 
     public String getMsg() {
@@ -45,11 +45,11 @@ public class Result {
         this.code = code;
     }
 
-    public Object getObj() {
-        return obj;
+    public Object getData() {
+        return data;
     }
 
-    public void setObj(Object obj) {
-        this.obj = obj;
+    public void setData(Object data) {
+        this.data = data;
     }
 }
